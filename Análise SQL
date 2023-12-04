@@ -1,0 +1,44 @@
+#SQL Lite 
+import _sqlite3
+
+conn = _sqlite3.connect('enterprise.db')
+customer.to_sql(name='customers3', con=conn)
+
+!sqlite3 enterprise.db '.tables'
+
+!sqlite3 enterprise.db 'PRAGMA table_info(customer)'
+
+customer_sql = pd.read_sql('SELECT * FROM customer', con=conn)
+type(customer_sql)  
+
+query = """
+            SELECT "Gender", "Spending Score", "Profession"
+            FROM customer;
+        """
+        
+customer_sql = pd.read_sql(query, con=conn, index_col="Gender")
+customer_sql
+
+query = """
+            SELECT * 
+            FROM customer
+            WHERE "Spending Score" = "99 Zaqsz  ";
+        """
+        
+customer_sql = pd.read_sql(query, con=conn, index_col="Gender")
+customer_sql
+
+query = """
+            SELECT * 
+            FROM customer
+            WHERE `Work Experience` = '14' AND `Family Size` = '2'
+            ORDER BY `Annual income`;
+        """
+        
+customer_sql = pd.read_sql(query, con=conn, index_col="Gender")
+customer_sql
+
+query = """
+            SELECT *, "Annual income" / "Family Size" AS "Valor por indivíduo"
+            FROM customer;
+        """
